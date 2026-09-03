@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Registro de Álbumes</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Hoja de estilos personalizada-->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            
+            <!-- Mitad izquierda: Formulario -->
+            <div class="col-md-6">
+                <h3>Agregar Nuevo Álbum</h3>
+                
+                <form id="album-form">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input name="title" type="text" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Artist</label>
+                        <input name="artist" type="text" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Release Year</label>
+                        <input name="releaseYear" type="number" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Genre</label>
+                        <input name="genre" type="text" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rating</label>
+                        <input name="rating" type="number" class="form-control">
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input name="listened" type="checkbox" class="form-check-input">
+                        <label class="form-check-label">Listened</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+
+            <!-- Mitad derecha: Espacio reservado para los álbumes -->
+<div class="col-md-6">
+    <main id="album-container">
+        Texto dentro de un contenedor
+        <p>hola</p>
+        <!-- Aquí van los albums -->
+    </main>
+</div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

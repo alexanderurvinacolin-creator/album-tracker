@@ -1,0 +1,35 @@
+/* Color de fondo sutil para toda la página */
+body {
+    background-color: #414141; 
+}
+
+/* Le damos estilo de "tarjeta" al formulario para que resalte */
+form {
+    background-color: hsl(0, 26%, 45%);
+    padding: 25px;
+    border-radius: 12px;
+    /* Esto crea una sombra suave alrededor del formulario */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08); 
+    border: 1px solid #e9ecef;
+}
+
+/* Hacemos que el título combine con el botón azul principal */
+h3 {
+    color: #f59898;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Un pequeño efecto al pasar el mouse por el botón */
+.btn-primary {
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 10px rgb(253, 13, 13);
+    
+}
+main{
+    padding: 20px;
+}
