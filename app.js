@@ -1,57 +1,73 @@
-/**
- * Todo lo que selecionemos al principio debe ser seleccionado mediante el document.
- * 
- * *Opciones de Seleccion Clásicas.
- * getElementByld
- * getElementsByClassName
- * 
- * *Opciones de Sleccion Modernas.
- * Nos permiten seleccionar por un selector css, como:
- * etiqueta por ejemplo form
- * clase . por ejemplo: form-control
- * id
- */
-
+// * Seleccionamos el formulario y el contenedor donde irán las tarjetas
 const formEl = document.getElementById("album-form");
 const mainEl = document.querySelector("#album-container");
 
-/** 
- * *EVENTOS 
- * Es cualquier accion que realiza el usuario en la página web.
- * ?Escuchar por el evento.
- * ?Escuchamos por un evento que cuando ocurra desencadene una respuesta.
- * 
-*/
+// * Creamos nuestra lista vacía donde guardaremos todos los álbumes (nuestra mochila)
+let albums = [];
 
-/**
- * Pasos paar extraer la información.
- * 1. Agregar un event listener del evento submit
- * 2. Prevenir el comportamiento default
- * 3. Construir un form data dandole el elemento formulario
- */
+// * CORRECCIÓN 1: Faltaba un punto entre 'window' y 'addEventListener'.
+// * Esto se ejecuta apenas carga la página para recuperar los datos guardados.
+window.addEventListener("load", (event) => {
+  // * Si no hay nada guardado en el LocalStorage con el nombre "albums", no hacemos nada y salimos.
+  if (getitemLocalStorage("albums") == undefined) return;
+  
+  // * Si sí hay datos, los sacamos y los metemos a nuestra lista 'albums'
+  albums = [...getitemLocalStorage("albums")];
+  console.log(albums);
+
+  // * CORRECCIÓN 2: Faltaba dibujar las tarjetas. 
+  // * Los datos ya estaban en la memoria, pero hay que decirle que los pinte en la pantalla.
+  albums.map((album) => renderCard(album, mainEl));
+});
 
 formEl.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(formEl);
-    console.log(event);
-    console.log(formData);
     const dataArray = [...formData];
-    console.log(dataArray);
-    const dataObject = Object.fromEntries(dataArray);
-    console.log(dataObject);
-
-    //*Como hacerlo en una línea: 
-    // const album = Object.fromEntries([... new FormData(formEl)]);
+    const album = Object.fromEntries(dataArray);
+    
+    // * Metemos el nuevo álbum a nuestra lista
+    albums.push(album);
+    // * Guardamos la lista actualizada en el disco duro del navegador (LocalStorage)
+    setLocalStorage("albums", albums);
+    
+    // * Limpiamos la mesa (el contenedor) antes de volver a dibujar
+    mainEl.innerHTML = "";
+    
+    // * Renderizamos (dibujamos) todas las tarjetas una por una
+    albums.map((album) => renderCard(album, mainEl));
+    
+    // * Limpiamos las cajitas del formulario para el siguiente registro
+    formEl.reset();
 });
 
-const card = `
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div>
-  </div>
-`;
+const renderCard = (albumObject, contenedor) => {
+    const card = `
+      <div class="card" style="width: 18rem; margin-bottom: 10px;">
+        <div class="card-body">
+          <h5 class="card-title">Album: ${albumObject.title}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">Artist: ${albumObject.artist}</h6>
+          <p class="card-text">Genre: ${albumObject.genre}</p>
+          <a href="#" class="card-link">Release Year: ${albumObject.releaseYear}</a>
+          <a href="#" class="card-link">Rating: ${albumObject.rating}</a>
+        </div>
+      </div>
+    `;
+    
+    contenedor.insertAdjacentHTML("beforeend", card);
+};
+
+const setLocalStorage = (key, value) => {
+  // * Paso 1: Convertimos nuestra lista de álbumes en un texto largo
+  const tetxValue = JSON.stringify(value);
+  // * Paso 2: Lo guardamos en la "caja fuerte" del navegador
+  localStorage.setItem(key, tetxValue);
+};
+
+const getitemLocalStorage = (key) => {
+  // * Si la caja fuerte está vacía, regresamos nada
+  if (localStorage.getItem(key) == null) return;
+  // * Si hay texto, lo convertimos de vuelta a piezas de JavaScript (objetos y listas)
+  const data = JSON.parse(localStorage.getItem(key)); 
+  return data;
+};
